@@ -36,6 +36,7 @@
         }
         td:nth-child(3) { /* Рецепт */
             width: 300px;
+            text-align: left;
         }
         td:nth-child(4) { /* Фото */
             width: 150px;
@@ -92,11 +93,11 @@
                 if (xhr.status === 200) {
                     var parser = new DOMParser();
                     var doc = parser.parseFromString(xhr.responseText, 'text/html');
-                    var recipeElement = doc.querySelector('.emotion-196248s'); // Выбрать элемент с классом emotion-196248s
+                    var recipeElement = doc.querySelector('.emotion-196248s', '.emotion-196248s'); // Выбрать элемент с классом emotion-196248s
                     if (recipeElement) {
-                        var recipeText = recipeElement.textContent.substring(0, 100); // Извлечь текст и ограничить до 100 символов
+                        var recipeText = recipeElement.textContent.substring(0, 200); // Извлечь текст и ограничить до 100 символов
 
-                        if (recipeText.length > 100) {
+                        if (recipeText.length > 200) {
                             recipeText += '...';
                         }
 
