@@ -1,10 +1,130 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Рейтинг блюд</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            font-family: Calibri, sans-serif;
+            margin: 0 auto; /* Центрирование таблицы */
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center; /* Выравнивание по умолчанию */
+            font-size: 10px;
+        }
+        th {
+            background-color: #90EE90;
+        }
+        tr:not(:first-child) {
+            background-color: #F8BBFF;
+        }
+        img {
+            width: 100px;
+            height: auto;
+        }
+        /* Задать ширину столбцов */
+        th, td:nth-child(1) { /* Блюдо */
+            width: 250px;
+        }
+        td:nth-child(2) { /* Оценка */
+            width: 80px;
+            text-align: center; /* Выравнивание по центру */
+        }
+        td:nth-child(3) { /* Рецепт */
+            width: 300px;
+        }
+        td:nth-child(4) { /* Фото */
+            width: 150px;
+            text-align: center; /* Выравнивание по центру */
+        }
+        /* Выравнивание значений в столбце "Блюдо" по центру */
+        td:nth-child(1) {
+            text-align: left;
+        }
+    </style>
 </head>
 <body>
+    <h1>Мой рейтинг случайных блюд</h1>
 
+    <table>
+        <tr>
+            <th>Блюдо</th>
+            <th>Оценка (1-10)</th>
+            <th>Рецепт</th>
+            <th>Фото</th>
+        </tr>
+        <tr>
+            <td><strong>Салат Цезарь с курицей</strong></td>
+            <td>7</td>
+            <td><a href="https://eda.ru/recepty/salaty/salat-cezar-s-kuricey-50966" target="_blank"></a></td>
+            <td><img src="https://eda.ru/images/RecipePhoto/620x415/salat-cezar-s-kuricey_50966_photo_56560.jpg" alt="Салат Цезарь с курицей"></td>
+        </tr>
+        <tr>
+            <td><strong>Суп-пюре из тыквы</strong></td>
+            <td>8</td>
+            <td><a href="https://eda.ru/recepty/osnovnye-blyuda/slivochnij-tikvennij-krem-sup-34180" target="_blank"></a></td>
+            <td><img src="https://eda.ru/images/RecipePhoto/620x415/slivochnij-tikvennij-krem-sup_34180_photo_121296.jpg" alt="Суп-пюре из тыквы"></td>
+        </tr>
+        <tr>
+            <td><strong>Пицца Маргарита</strong></td>
+            <td>9</td>
+            <td><a href="https://eda.ru/recepty/pasta-picca/picca-margarita-s-mocarelloj-i-parmezanom-50427" target="_blank"></a></td>
+            <td><img src="https://eda.ru/images/RecipePhoto/620x415/picca-margarita-s-mocarelloj-i-parmezanom_50427_photo_55012.jpg" alt="Пицца Маргарита"></td>
+        </tr>
+        <tr>
+            <td><strong>Стейк Рибай</strong></td>
+            <td>10</td>
+            <td><a href="https://www.maximonline.ru/recipes/meat/steak-ribay-recept-prigotovleniya-na-skovorode-doma.html" target="_blank"></a></td>
+            <td><img src="https://eda.ru/images/RecipePhoto/620x415/steyk-ribay-s-kress-salatom_80080_photo_95404.jpg" alt="Стейк Рибай"></td>
+        </tr>
+    </table>
+
+    <script>
+        // Функция для загрузки первых 100 символов текста рецепта
+        function getRecipeText(recipeURL, callback) {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', recipeURL);
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    var parser = new DOMParser();
+                    var doc = parser.parseFromString(xhr.responseText, 'text/html');
+                    var recipeElement = doc.querySelector('.emotion-196248s'); // Выбрать элемент с классом emotion-196248s
+                    if (recipeElement) {
+                        var recipeText = recipeElement.textContent.substring(0, 100); // Извлечь текст и ограничить до 100 символов
+
+                        if (recipeText.length > 100) {
+                            recipeText += '...';
+                        }
+
+                        callback(recipeText);
+                    } else {
+                        console.error('Не удалось найти элемент с текстом рецепта:', recipeURL);
+                    }
+                } else {
+                    console.error('Не удалось получить текст рецепта:', recipeURL);
+                }
+            };
+            xhr.send();
+        }
+
+        // Функция для обновления текста ссылки
+        function updateLinkText(recipeURL, linkElement) {
+            getRecipeText(recipeURL, function(recipeText) {
+                if (recipeText) {
+                    linkElement.textContent = recipeText;
+                }
+            });
+        }
+
+        // Запуск функции для каждой ссылки в таблице
+        var links = document.querySelectorAll('table a[href]');
+        for (var i = 0; i < links.length; i++) {
+            updateLinkText(links[i].href, links[i]);
+        }
+    </script>
 </body>
 </html>
