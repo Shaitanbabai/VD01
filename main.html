@@ -79,7 +79,7 @@
         <tr>
             <td><strong>Стейк Рибай</strong></td>
             <td>10</td>
-            <td><a href="https://www.maximonline.ru/recipes/meat/steak-ribay-recept-prigotovleniya-na-skovorode-doma.html" target="_blank"></a></td>
+            <td><a href="https://eda.ru/recepty/osnovnye-blyuda/stejk-ribaj-s-aromatnim-maslom-35832" target="_blank"></a></td>
             <td><img src="https://eda.ru/images/RecipePhoto/620x415/steyk-ribay-s-kress-salatom_80080_photo_95404.jpg" alt="Стейк Рибай"></td>
         </tr>
     </table>
@@ -93,7 +93,7 @@
                 if (xhr.status === 200) {
                     var parser = new DOMParser();
                     var doc = parser.parseFromString(xhr.responseText, 'text/html');
-                    var recipeElement = doc.querySelector('.emotion-196248s', '.emotion-196248s'); // Выбрать элемент с классом emotion-196248s
+                    var recipeElement = doc.querySelector('.emotion-196248s'); // Выбрать элемент с классом emotion-196248s
                     if (recipeElement) {
                         var recipeText = recipeElement.textContent.substring(0, 200); // Извлечь текст и ограничить до 100 символов
 
